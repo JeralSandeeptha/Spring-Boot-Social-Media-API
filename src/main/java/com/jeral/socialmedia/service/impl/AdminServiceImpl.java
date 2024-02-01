@@ -35,11 +35,12 @@ public class AdminServiceImpl implements AdminService {
         long id = uuid.getMostSignificantBits();
         Admin admin = new Admin();
         admin.setId(id);
-        admin.setPassword(adminRequestDTO.getUsername());
+        admin.setUsername(adminRequestDTO.getUsername());
         admin.setPassword(adminRequestDTO.getPassword());
         admin.setRole("ADMIN");
         admin.setCreatedAt(new Date());
         admin.setUpdatedAt(new Date());
+        adminRepo.save(admin);
         return admin;
     }
 

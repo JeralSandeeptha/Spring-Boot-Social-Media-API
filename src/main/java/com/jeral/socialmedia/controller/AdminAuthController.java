@@ -36,7 +36,7 @@ public class AdminAuthController {
         this.adminRepo = adminRepo;
     }
 
-    @PostMapping("/register")
+    @PostMapping(path = "/register")
     public CompletableFuture<ResponseEntity<StandardResponse>> registerAdmin(@RequestBody AdminRequestDTO adminRequestDTO) {
         try {
             Admin admin = adminService.registerAdmin(adminRequestDTO);
@@ -62,12 +62,12 @@ public class AdminAuthController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping(path = "/login")
     public CompletableFuture<ResponseEntity<StandardResponse>> loginAdmin(@RequestBody AuthRequest authRequest) {
         try {
             Admin admin = adminRepo.findByUsername(authRequest.getUsername());
             if (admin != null) {
-                if (admin.getPassword() == authRequest.getPassword()) {
+                if (admin.getPassword().equals(authRequest.getPassword())) {
                     String token = adminService.loginAdmin(authRequest);
                     HashMap<String, Object> responseData = new HashMap<>();
                     responseData.put("user", admin);

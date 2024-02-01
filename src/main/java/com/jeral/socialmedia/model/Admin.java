@@ -1,12 +1,10 @@
 package com.jeral.socialmedia.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
@@ -16,6 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class Admin {
 
+    //@ID should be import from jakarta persistance
+    @Id
     private long id;
     private String username;
     private String password;

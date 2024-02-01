@@ -28,7 +28,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/list")
+    @GetMapping(path = "/list")
     public CompletableFuture<ResponseEntity<StandardResponse>> getAdmins() {
         try {
             List<Admin> allAdmins = adminService.getAddAdmins();
@@ -54,8 +54,8 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/{adminId}")
-    public CompletableFuture<ResponseEntity<StandardResponse>> getAdmin(@RequestParam long adminId) {
+    @GetMapping(path = "/{adminId}")
+    public CompletableFuture<ResponseEntity<StandardResponse>> getAdmin(@PathVariable(value = "adminId", required = false) long adminId) {
         try {
             AdminResponseDTO admin = adminService.getAdmin(adminId);
             logger.info("Get admin query was successful");
@@ -80,8 +80,8 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/{adminId}")
-    public CompletableFuture<ResponseEntity<StandardResponse>> updateAdmin(@RequestParam long adminId, @RequestBody AdminRequestDTO adminRequestDTO) {
+    @PutMapping(path = "/{adminId}")
+    public CompletableFuture<ResponseEntity<StandardResponse>> updateAdmin(@PathVariable(value = "adminId", required = false) long adminId, @RequestBody AdminRequestDTO adminRequestDTO) {
         try {
             Admin admin = adminService.updateAdmin(adminRequestDTO, adminId);
             logger.info("Update admin query was successful");
@@ -106,10 +106,10 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/{adminId}")
-    public CompletableFuture<ResponseEntity<StandardResponse>> deleteAdmin(@RequestParam long adminId) {
+    @DeleteMapping(path = "/{adminId}")
+    public CompletableFuture<ResponseEntity<StandardResponse>> deleteAdmin(@PathVariable(value = "adminId", required = false) long adminId) {
         try {
-            adminService.deleteAdmin(adminId);
+                adminService.deleteAdmin(adminId);
             logger.info("Delete admin query was successful");
             return CompletableFuture.completedFuture(new ResponseEntity<>(
                     new StandardResponse(
