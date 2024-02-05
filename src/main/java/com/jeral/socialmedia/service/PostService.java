@@ -14,4 +14,6 @@ public interface PostService {
     public void deletePost(Long postId);
     public List<Post> getAllPostsByUserId(Long userId);
     public void deleteAllPostsByUserId(Long userId);
+    public void likePost(Long postId, Long userId) throws Exception;
+    public void dislikePost(Long postId, Long userId) throws Exception;
 }

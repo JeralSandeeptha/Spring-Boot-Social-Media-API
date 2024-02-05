@@ -101,4 +101,39 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = postRepo.findByUserId(userId);
         postRepo.deleteAll(posts);
     }
+
+    @Override
+    public void likePost(Long postId, Long userId) throws Exception {
+        Optional<Post> selectedPost = postRepo.findById(postId);
+        if (selectedPost.isEmpty()) {
+            throw new NotFoundException("Post id not found");
+        }else {
+            Post post = selectedPost.get();
+            List<Long> likes = post.getLikes();
+            if (likes.contains(userId)) {
+                throw new Exception("User already like this post");
+            } else {
+                likes.addLast(postId);
+                post.setLikes(likes);
+                postRepo.save(post);
+            }
+        }
+    }
+
+    @Override
+    public void dislikePost(Long postId, Long userId) throws Exception {
+        Optional<Post> selectedPost = postRepo.findById(postId);
+        if (selectedPost.isEmpty()) {
+            throw new NotFoundException("Post id not found");
+        }else {
+            Post post = selectedPost.get();
+            List<Long> likes = post.getLikes();
+            if (!likes.contains(userId)) {
+                throw new Exception("User didn't like this post");
+            } else {
+                likes.removeIf(id -> id.equals(userId));
+                postRepo.save(post);
+            }
+        }
+    }
 }

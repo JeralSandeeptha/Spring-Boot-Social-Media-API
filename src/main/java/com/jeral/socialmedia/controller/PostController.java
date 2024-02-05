@@ -190,4 +190,56 @@ public class PostController {
             ));
         }
     }
+
+    @PutMapping(path = "/like/{postId}/{userId}")
+    public CompletableFuture<ResponseEntity<StandardResponse>> likePost(@PathVariable Long postId, @PathVariable Long userId) {
+        try {
+            postService.likePost(postId, userId);
+            logger.info("Like post query was successful");
+            return CompletableFuture.completedFuture(new ResponseEntity<>(
+                    new StandardResponse(
+                            200,
+                            "Like post query was successful",
+                            "Like post query was successful"
+                    ),
+                    HttpStatus.OK
+            ));
+        }catch (Exception ex) {
+            logger.error("Like post query was failed");
+            return CompletableFuture.completedFuture(new ResponseEntity<>(
+                    new StandardResponse(
+                            500,
+                            "Like post query was failed",
+                            ex.getMessage()
+                    ),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            ));
+        }
+    }
+
+    @PutMapping(path = "/dislike/{postId}/{userId}")
+    public CompletableFuture<ResponseEntity<StandardResponse>> dislikePost(@PathVariable Long postId, @PathVariable Long userId) {
+        try {
+            postService.dislikePost(postId, userId);
+            logger.info("Dislike post query was successful");
+            return CompletableFuture.completedFuture(new ResponseEntity<>(
+                    new StandardResponse(
+                            200,
+                            "Dislike post query was successful",
+                            "Dislike post query was successful"
+                    ),
+                    HttpStatus.OK
+            ));
+        }catch (Exception ex) {
+            logger.error("Dislike post query was failed");
+            return CompletableFuture.completedFuture(new ResponseEntity<>(
+                    new StandardResponse(
+                            500,
+                            "Dislike post query was failed",
+                            ex.getMessage()
+                    ),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            ));
+        }
+    }
 }
