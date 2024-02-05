@@ -3,6 +3,7 @@ package com.jeral.socialmedia.controller;
 import com.jeral.socialmedia.dto.request.PostRequestDTO;
 import com.jeral.socialmedia.dto.response.PostResponseDTO;
 import com.jeral.socialmedia.model.Post;
+import com.jeral.socialmedia.service.impl.CommentServiceImpl;
 import com.jeral.socialmedia.service.impl.PostServiceImpl;
 import com.jeral.socialmedia.utils.StandardResponse;
 import org.slf4j.Logger;
@@ -24,8 +25,12 @@ public class PostController {
     @Autowired
     private final PostServiceImpl postService;
 
-    public PostController(PostServiceImpl postService) {
+    @Autowired
+    private final CommentServiceImpl commentService;
+
+    public PostController(PostServiceImpl postService, CommentServiceImpl commentService) {
         this.postService = postService;
+        this.commentService = commentService;
     }
 
     @PostMapping(path = "/{userId}")
@@ -110,6 +115,8 @@ public class PostController {
     public CompletableFuture<ResponseEntity<StandardResponse>> deletePost(@PathVariable Long postId) {
         try {
             postService.deletePost(postId);
+            //delete all comments related to that post
+            commentService.deleteAllCommentsbyPostId(postId);
             logger.info("Delete post query was successful");
             return CompletableFuture.completedFuture(new ResponseEntity<>(
                     new StandardResponse(
