@@ -1,6 +1,5 @@
 package com.jeral.socialmedia.model;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -9,22 +8,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Builder
+public class Comment {
 
     @Id
-    private long id;
-    private String username;
-    private String password;
-    private String role;
-    @Embedded
-    private Details details;
+    private Long commentId;
+    private String comment;
     private Date createdAt;
     private Date updatedAt;
+    private Long postId;
+    private Long userId;
 }
