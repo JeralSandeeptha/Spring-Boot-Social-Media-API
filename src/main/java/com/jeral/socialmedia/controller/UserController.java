@@ -1,9 +1,10 @@
 package com.jeral.socialmedia.controller;
 
 import com.jeral.socialmedia.dto.request.UserDetailsRequestDTO;
-import com.jeral.socialmedia.dto.request.UserRequestDTO;
 import com.jeral.socialmedia.dto.response.UserResponseDTO;
 import com.jeral.socialmedia.model.User;
+import com.jeral.socialmedia.service.impl.CommentServiceImpl;
+import com.jeral.socialmedia.service.impl.PostServiceImpl;
 import com.jeral.socialmedia.service.impl.UserServiceImpl;
 import com.jeral.socialmedia.utils.StandardResponse;
 import org.slf4j.Logger;
@@ -22,9 +23,13 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserServiceImpl userService;
+    private final PostServiceImpl postService;
+    private final CommentServiceImpl commentService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, PostServiceImpl postService, CommentServiceImpl commentService) {
         this.userService = userService;
+        this.postService = postService;
+        this.commentService = commentService;
     }
 
     @PostMapping(path = "/")
@@ -135,6 +140,10 @@ public class UserController {
     public CompletableFuture<ResponseEntity<StandardResponse>> deleteUser(@PathVariable(value = "userId", required = false) long userId) {
         try {
             userService.deleteUser(userId);
+            //delete user all posts
+            postService.deleteAllPostsByUserId(userId);
+            //delete user all comments
+            commentService.deleteAllCommentsbyUserId(userId);
             logger.info("Delete user query was successful");
             return CompletableFuture.completedFuture(new ResponseEntity<>(
                     new StandardResponse(

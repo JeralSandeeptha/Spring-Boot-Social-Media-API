@@ -100,4 +100,10 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments = commentRepo.findByPostId(postId);
         commentRepo.deleteAll(comments);
     }
+
+    @Override
+    public void deleteAllCommentsbyUserId(Long userId) {
+        List<Comment> comments = commentRepo.findByUserId(userId);
+        commentRepo.deleteAll(comments);
+    }
 }

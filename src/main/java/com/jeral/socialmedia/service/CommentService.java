@@ -15,4 +15,5 @@ public interface CommentService {
     public void deleteComment(Long id);
     public List<Comment> getAllCommentsByPostId(Long postId);
     public void deleteAllCommentsbyPostId(Long postId);
+    public void deleteAllCommentsbyUserId(Long userId);
 }
