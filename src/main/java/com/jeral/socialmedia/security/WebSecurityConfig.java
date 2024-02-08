@@ -12,8 +12,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http
                 .cors().disable()
                 .csrf().disable()
@@ -22,21 +25,24 @@ public class WebSecurityConfig {
                 .securityMatcher("/api/v1/**")
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
 
-                        .requestMatchers("/api/v1/post/").permitAll()
-                        .requestMatchers("/api/v1/post/**").permitAll()
-                        .requestMatchers("/api/v1/post/like/**").permitAll()
-                        .requestMatchers("/api/v1/post/dislike/**").permitAll()
+                        //In here we should give all the endpoints without authentication.
+                        //Other endpoints should under jwt authentication
 
-                        .requestMatchers("/api/v1/comment/").permitAll()
-                        .requestMatchers("/api/v1/comment/**").permitAll()
+//                        .requestMatchers("/api/v1/post/").permitAll()
+//                        .requestMatchers("/api/v1/post/**").permitAll()
+//                        .requestMatchers("/api/v1/post/like/**").permitAll()
+//                        .requestMatchers("/api/v1/post/dislike/**").permitAll()
 
-                        .requestMatchers("/api/v1/admin/list").permitAll()
+//                        .requestMatchers("/api/v1/comment/").permitAll()
+//                        .requestMatchers("/api/v1/comment/**").permitAll()
+
+//                        .requestMatchers("/api/v1/admin/list").permitAll()
                         .requestMatchers("/api/v1/admin/auth/login").permitAll()
                         .requestMatchers("/api/v1/admin/auth/register").permitAll()
-                        .requestMatchers("/api/v1/admin/**").permitAll()
+//                        .requestMatchers("/api/v1/admin/**").permitAll()
 
-                        .requestMatchers("/api/v1/user/").permitAll()
-                        .requestMatchers("/api/v1/user/**").permitAll()
+//                        .requestMatchers("/api/v1/user/").permitAll()
+//                        .requestMatchers("/api/v1/user/**").permitAll()
                         .requestMatchers("/api/v1/user/auth/login").permitAll()
                         .requestMatchers("/api/v1/user/auth/register").permitAll()
 
