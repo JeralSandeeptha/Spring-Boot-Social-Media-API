@@ -1,5 +1,7 @@
 package com.jeral.socialmedia.service.impl;
 
+import com.jeral.socialmedia.model.Admin;
+import com.jeral.socialmedia.model.User;
 import com.jeral.socialmedia.service.JwtService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,8 +17,19 @@ import java.util.Map;
 @Service
 public class JwtServiceImpl implements JwtService {
     @Override
-    public String generateToken(String username) {
+    public String generateToken(Object user, String username) {
         Map<String, Object> claims = new HashMap<>();
+        if (user instanceof Admin) {
+            Admin admin = (Admin) user;
+            claims.put("userId", admin.getId());
+            claims.put("username", admin.getUsername());
+            claims.put("role", admin.getRole());
+        } else {
+            User normalUser = (User) user;
+            claims.put("userId", normalUser.getId());
+            claims.put("username", normalUser.getUsername());
+            claims.put("role", normalUser.getRole());
+        }
         return createToken(claims, username);
     }
 

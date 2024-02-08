@@ -46,9 +46,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String loginAdmin(AuthRequest authRequest) {
-        Admin admin = adminRepo.findByUsername(authRequest.getUsername());
-        if (admin != null) {
-            String token = jwtService.generateToken(authRequest.getUsername());
+        Admin user = adminRepo.findByUsername(authRequest.getUsername());
+        if (user != null) {
+            String token = jwtService.generateToken(user, authRequest.getUsername());
             return token;
         }else {
             throw new NotFoundException("Can not find this username");

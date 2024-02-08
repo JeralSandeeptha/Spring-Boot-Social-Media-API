@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public String loginUser(AuthRequest authRequest) {
         User user = userRepo.findByUsername(authRequest.getUsername());
         if (user != null) {
-            String token = jwtService.generateToken(authRequest.getUsername());
+            String token = jwtService.generateToken(user, authRequest.getUsername());
             return token;
         }else {
             throw new NotFoundException("Can not find this username");
