@@ -21,7 +21,6 @@ public class CommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
-    @Autowired
     private final CommentServiceImpl commentService;
 
     public CommentController(CommentServiceImpl commentService) {
