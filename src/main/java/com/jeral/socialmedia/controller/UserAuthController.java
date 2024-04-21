@@ -24,10 +24,8 @@ public class UserAuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAuthController.class);
 
-    @Autowired
     private final UserServiceImpl userService;
 
-    @Autowired
     private final UserRepo userRepo;
 
     public UserAuthController(UserServiceImpl userService, UserRepo userRepo) {

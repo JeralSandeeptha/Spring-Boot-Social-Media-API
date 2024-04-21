@@ -22,10 +22,8 @@ public class PostController {
 
     private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
-    @Autowired
     private final PostServiceImpl postService;
 
-    @Autowired
     private final CommentServiceImpl commentService;
 
     public PostController(PostServiceImpl postService, CommentServiceImpl commentService) {

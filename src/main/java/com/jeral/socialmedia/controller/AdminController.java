@@ -21,7 +21,6 @@ public class AdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    @Autowired
     private final AdminServiceImpl adminService;
 
     public AdminController(AdminServiceImpl adminService) {

@@ -25,10 +25,8 @@ public class AdminAuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminAuthController.class);
 
-    @Autowired
     private final AdminServiceImpl adminService;
 
-    @Autowired
     private final AdminRepo adminRepo;
 
     public AdminAuthController(AdminServiceImpl adminService, AdminRepo adminRepo) {
